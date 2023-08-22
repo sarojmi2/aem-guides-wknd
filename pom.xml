@@ -739,6 +739,7 @@ Bundle-DocURL:
                 <groupId>com.adobe.cq</groupId>
                 <artifactId>core.wcm.components.core</artifactId>
                 <version>${core.wcm.components.version}</version>
+                 <type>jar</type>
                 <scope>provided</scope>
             </dependency>
             <dependency>
