@@ -12,6 +12,7 @@ import org.apache.sling.api.servlets.SlingSafeMethodsServlet;
 import org.osgi.framework.Constants;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.apache.sling.api.resource.ResourceResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,7 +43,8 @@ public class CustomDispatcherFlushServlet extends SlingSafeMethodsServlet {
             String cqPath = request.getParameter("path");
             String excelFilePath = request.getParameter("excelPath");
             String cqAction = request.getParameter("cqAction");
-            StringBuilder res =  flushDispatcher(cqPath, excelFilePath , cqAction);
+            ResourceResolver rr = request.getResourceResolver();
+            StringBuilder res =  flushDispatcher(cqPath, excelFilePath , cqAction, rr);
             PrintWriter out = response.getWriter();
             response.setContentType("text/plain");
             response.setCharacterEncoding("UTF-8");
@@ -50,10 +52,10 @@ public class CustomDispatcherFlushServlet extends SlingSafeMethodsServlet {
             out.flush();
             
       }
-        public StringBuilder flushDispatcher(String cqPath,String excelFilePath ,String cqAction)
+        public StringBuilder flushDispatcher(String cqPath,String excelFilePath ,String cqAction, ResourceResolver rr)
         {
              LOGGER.debug("Flush Dispatcher method --2-- called.");
-            StringBuilder path = customDispatcherFlush.handleFlushEvent(cqPath, excelFilePath , cqAction);
+            StringBuilder path = customDispatcherFlush.handleFlushEvent(cqPath, excelFilePath , cqAction, rr);
             String msg = "Custom Dispatcher config path is {}.";
             LOGGER.debug( msg, path);
             return path;
